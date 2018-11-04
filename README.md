@@ -1,2 +1,2 @@
-# eosLuckyDice
+# EOSLuckyDice
 EOSIO Lucky Dice Example
