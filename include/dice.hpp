@@ -47,18 +47,20 @@ private:
     };
     typedef eosio::multi_index<"users"_n, person> user_index;
 
-    struct game {
-        string date;
-        asset number;
-        asset result;
-        asset profit;
-    };
+    // struct game {
+    //     string date;
+    //     asset number;
+    //     asset result;
+    //     asset profit;
+    // };
 
     struct [[eosio::table]] game_info {
         name key;
-        list<game> games;
+        // list<game> games;
 
         uint64_t primary_key() const { return key.value; }
     };
     typedef eosio::multi_index<"games"_n, game_info> game_index;
+
+    bool playdice(asset number);
 };
