@@ -6,22 +6,21 @@
 #include <string>
 #include <list>
 
-using std::string;
-using std::list;
-using eosio::asset;
-using eosio::name;
-using eosio::contract;
+using namespace std;
+using namespace eosio;
 
-class [[eosio::contract]] dice : public contract {
+class [[eosio::contract]] dice : public eosio::contract {
 
 public:
-    dice(name s, name code, eosio::datastream<const char*> ds) : contract::contract(s, code, ds) {}
+    using contract::contract;
+
+    dice(name s, name code, eosio::datastream<const char*> ds) : contract(s, code, ds) {}
 
     [[eosio::action]]
-    void bet(name user, asset number);
+    void bet(name user, uint32_t number);
 
     [[eosio::action]]
-    void notires(name user, asset result, asset profit);
+    void notires(name user, uint32_t number, uint32_t result, uint32_t profit);
 
     [[eosio::action]]
     void reguser(name user, string nick_name);
@@ -30,7 +29,7 @@ public:
     void dereguser(name user);
 
     [[eosio::action]]
-    void upsertgame(name user, string date, asset number, asset result, asset profit);
+    void upsertgame(name user, string date, uint32_t number, uint32_t result, uint32_t profit);
 
     [[eosio::action]]
     void erasegame(name user);
@@ -39,6 +38,8 @@ public:
     void history(name user);
 
 private:
+    void send_result(name user, uint32_t number, uint32_t result, uint32_t profit);
+
     struct [[eosio::table]] person {
         name key;
         string nick_name;
@@ -47,18 +48,18 @@ private:
     };
     typedef eosio::multi_index<"users"_n, person> user_index;
 
-    struct game {
+    struct gamelog {
         string date;
-        asset number;
-        asset result;
-        asset profit;
+        uint32_t number;
+        uint32_t result;
+        uint32_t profit;
     };
 
-    struct [[eosio::table]] game_info {
+    struct [[eosio::table]] usergamelog {
         name key;
-        list<game> games;
+        vector<gamelog> gamelogs;
 
         uint64_t primary_key() const { return key.value; }
     };
-    typedef eosio::multi_index<"games"_n, game_info> game_index;
+    typedef eosio::multi_index<"games"_n, usergamelog> game_index;
 };
