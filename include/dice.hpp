@@ -9,38 +9,31 @@
 using namespace std;
 using namespace eosio;
 
-class [[eosio::contract]] dice : public eosio::contract {
+CONTRACT dice : public eosio::contract {
 
 public:
     using contract::contract;
 
     dice(name s, name code, eosio::datastream<const char*> ds) : contract(s, code, ds) {}
 
-    [[eosio::action]]
-    void bet(name user, uint32_t number);
+    ACTION bet(name user, uint32_t number);
 
-    [[eosio::action]]
-    void notires(name user, uint32_t number, uint32_t result, uint32_t profit);
+    ACTION notires(name user, uint32_t number, uint32_t result, uint32_t profit);
 
-    [[eosio::action]]
-    void reguser(name user, string nick_name);
+    ACTION reguser(name user, string nick_name);
 
-    [[eosio::action]]
-    void dereguser(name user);
+    ACTION dereguser(name user);
 
-    [[eosio::action]]
-    void upsertgame(name user, string date, uint32_t number, uint32_t result, uint32_t profit);
+    ACTION upsertgame(name user, string date, uint32_t number, uint32_t result, uint32_t profit);
 
-    [[eosio::action]]
-    void erasegame(name user);
+    ACTION erasegame(name user);
 
-    [[eosio::action]]
-    void history(name user);
+    ACTION history(name user);
 
 private:
     void send_result(name user, uint32_t number, uint32_t result, uint32_t profit);
 
-    struct [[eosio::table]] person {
+    TABLE person {
         name key;
         string nick_name;
 
@@ -55,7 +48,7 @@ private:
         uint32_t profit;
     };
 
-    struct [[eosio::table]] usergamelog {
+    TABLE usergamelog {
         name key;
         vector<gamelog> gamelogs;
 
