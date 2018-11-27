@@ -1,5 +1,5 @@
-#include "dice.hpp"
-#include "random_gen.hpp"
+#include "../include/dice.hpp"
+#include "../include/random_gen.hpp"
 #include <eosiolib/print.h>
 
 void dice::bet(name user, uint32_t number) {
