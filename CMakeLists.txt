@@ -7,10 +7,11 @@ find_package(eosio.cdt)
 SET(CONTRACT_NAME dice)     # SET Contract name
 SET(WASM_NAME dice)         # SET WASM name
 SET(CPP src/dice.cpp)       # SET Source Code File
-add_contract( ${CONTRACT_NAME} ${WASM_NAME} ${CPP})
 
+INCLUDE_DIRECTORIES (include)
+
+#
+add_contract( ${CONTRACT_NAME} ${WASM_NAME} ${CPP})
 # add_contract( {Contract Name} {WASM Name} {src/cpp} )
 # add_contract( dice dice src/dice.cpp)
-
-
 
